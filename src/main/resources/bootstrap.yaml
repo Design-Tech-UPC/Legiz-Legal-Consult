@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: legal-consult-service
+  cloud:
+    config:
+      enabled: false
+      uri: http://localhost:30000
+
+# MySQL Data Source Configuration
+
+  datasource:
+    url: jdbc:sqlserver://${DATABASE_HOST:localhost};database=${DATABASE_NAME:dbLegizLegalConsult};TrustServerCertificate=True;
+    username: ${USERNAME_DB:usrGym}
+    password: ${PASSWORD_DB:usrGym}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  # MySQL Dialect configuration
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServer2008Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create 
+
+server:
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true 
+    instance-id: ${spring.application.name}:${random.uuid}
+
+
+# Logging Level Configuration
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+  #Swagger
+springdoc:
+  api-docs:
+    path: /legiz-legal-consult-api-docs
+  swagger-ui:
+    path: /legiz-legal-consult-api-docs-ui.html
